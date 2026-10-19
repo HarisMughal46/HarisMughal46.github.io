@@ -18,26 +18,10 @@ portfolio/
 - SEO: title, description, canonical, Open Graph and Twitter cards, inline SVG favicon
 - Contact form with client-side validation that opens a pre-filled `mailto:` link (no backend)
 
-## Personalize
-Search `index.html` for **`PERSONALIZE`**. Every value you should check or replace has that comment next to it.
+## Content
+All content is real and lives in `index.html`: LinkedIn (`linkedin.com/in/harismughal-hm4646`), GitHub, email (`CONTACT_EMAIL` in the script too), About, quick facts, skills, certifications, six project cards (each linked to its GitHub repo; Projexa is private, so it shows a "Private repo" label), and the experience/education timeline.
 
-| What | Where / current value |
-|---|---|
-| Canonical + `og:url` | `https://your-domain.example/` → your deployed URL |
-| `og:image` / `twitter:image` | `https://your-domain.example/og-image.png` → absolute URL to a 1200×630 image |
-| Meta description | `<head>` |
-| LinkedIn | `https://www.linkedin.com/in/your-linkedin-handle` (hero, contact, footer: 3 places + visible label) |
-| GitHub | `https://github.com/HarisMughal46` (real) |
-| Email | `harismughalhm092@gmail.com` (real; also `CONTACT_EMAIL` in the script) |
-| Availability pill | "Open to new opportunities" |
-| Hero tagline | hero section |
-| Avatar | gradient "HM" tile; swap for `<img src="me.jpg" alt="Portrait of Haris Mughal" width="400" height="400">` |
-| About bio + quick facts | `[Placeholder]` paragraphs, `X+`, `XX`, `City` |
-| Project descriptions | TaskManagerApp, Projexa |
-| Project repo links | currently the GitHub profile, so switch them to each repo |
-| Live demo links | currently `#` |
-| "Coming soon" cards | 2 slots; replace them with real projects or delete them |
-| Timeline | 2 experience + 1 education entries, all placeholders |
+There is no `og-image.png` yet, so the `og:image`/`twitter:image` tags are left out and the Twitter card uses `summary`. To add a preview image, upload a 1200×630 `og-image.png`, add both tags back with its absolute URL, and switch the card to `summary_large_image`.
 
 **Colors and fonts:** edit the CSS variables at the top of `<style>` (`--c-primary`, `--c-secondary`, `--c-accent`, neutrals, `--font-heading`, `--font-body`). The dark theme overrides appear twice (the `prefers-color-scheme` block and `[data-theme="dark"]`), so keep both in sync. Re-check contrast after you change colors.
 
