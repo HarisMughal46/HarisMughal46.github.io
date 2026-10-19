@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://harismughal46.github.io/sitemap.xml
