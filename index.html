@@ -263,13 +263,15 @@ section{padding-block:var(--section-pad);position:relative}
 .projects-grid{display:grid;gap:var(--gap-lg)}
 @media (min-width:640px){.projects-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1024px){.projects-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.project-body{padding:var(--sp-5)}}
-.project-visual-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;min-width:0;overflow:hidden;border-bottom:1px solid var(--border);background:var(--surface-2)}
-.project-code-preview,.project-visual{min-width:0;min-height:180px;overflow:hidden;border-bottom:0}
-.project-code-preview .project-thumb{height:100%;min-height:180px;border-bottom:0}
+.project-visual-pair{display:flex;flex-direction:column;min-width:0;overflow:hidden;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.project-code-preview,.project-visual{display:block;width:100%;min-width:0;overflow:hidden;border-bottom:1px solid var(--border);aspect-ratio:16/9;min-height:0}
+.project-code-preview .project-thumb{width:100%;height:100%;min-height:0;aspect-ratio:auto;border:0;border-radius:0;overflow:hidden}
 .project-code-preview .term-bar{overflow:hidden}
 .project-code-preview .term-bar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.project-visual img{display:block;width:100%;height:100%;min-height:180px;object-fit:cover;object-position:top center}
-@media (max-width:639px){.project-visual-pair{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.project-code-preview,.project-visual,.project-code-preview .project-thumb,.project-visual img{min-height:160px}}
+.project-code-preview .code{font-size:clamp(9px,.8vw,12px);line-height:1.55;overflow:hidden;white-space:pre}
+.project-visual{border-bottom:0}
+.project-visual img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;object-position:center top;background:var(--surface-2)}
+@media (max-width:639px){.project-code-preview .code{font-size:10px}.project-visual-pair{grid-template-columns:minmax(0,1fr)}}
 .project-card{padding:0;display:flex;flex-direction:column;overflow:hidden;transform-style:preserve-3d;--rx:0deg;--ry:0deg;--s:1;transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s))}
 .project-card.featured{border-color:color-mix(in srgb,var(--accent-2) 55%,var(--border));box-shadow:var(--shadow),inset 0 3px 0 var(--accent-2)}
 @media (hover:hover) and (pointer:fine){
@@ -373,7 +375,20 @@ section{padding-block:var(--section-pad);position:relative}
 .nav-cv a:hover{border-color:var(--accent);color:var(--accent)}
 @media (min-width:640px) and (max-width:1023.98px){.nav-cv{display:none}}
 @media (max-width:639.98px){.nav-cv a{display:flex;margin:var(--sp-2) 0 0;border-radius:var(--radius-sm)}}
-  </style>
+  
+/* Professional, restrained impact metrics */
+.impact-strip{padding:clamp(36px,5vw,64px) 0;background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.impact-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.impact-heading .eyebrow{margin:0;color:var(--muted);font-size:var(--fs-xs);letter-spacing:.12em;text-transform:uppercase}
+.impact-heading h2{margin:0;font-family:var(--font-head);font-size:clamp(1.25rem,2vw,1.65rem);font-weight:600;letter-spacing:-.035em}
+.impact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.impact-card{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:0;padding:22px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:none}
+.impact-value{font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.6rem);line-height:1;font-weight:600;letter-spacing:-.06em;color:var(--text)}
+.impact-label{font-size:.94rem;font-weight:600;color:var(--text)}
+.impact-note{font-size:.8rem;line-height:1.5;color:var(--muted)}
+@media(min-width:760px){.impact-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.impact-card{padding:24px}}
+@media(prefers-reduced-motion:reduce){.impact-card{transition:none}}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -475,6 +490,37 @@ section{padding-block:var(--section-pad);position:relative}
         </div>
       </div>
       <a class="scroll-ind" href="#about"><span class="mouse" aria-hidden="true"></span>Scroll</a>
+    </section>
+
+    <section class="impact-strip" aria-labelledby="impact-title">
+      <div class="container">
+        <div class="impact-heading">
+          <p class="eyebrow">Selected impact</p>
+          <h2 id="impact-title">Work measured in outcomes.</h2>
+        </div>
+        <div class="impact-grid">
+          <article class="impact-card">
+            <span class="impact-value">09</span>
+            <span class="impact-label">Project case studies</span>
+            <span class="impact-note">Across software, AI and QA</span>
+          </article>
+          <article class="impact-card">
+            <span class="impact-value">186</span>
+            <span class="impact-label">Crystal Reports addressed</span>
+            <span class="impact-note">Parameter dropdown issue resolved</span>
+          </article>
+          <article class="impact-card">
+            <span class="impact-value">04</span>
+            <span class="impact-label">SAP B1 portal forms</span>
+            <span class="impact-note">Master data and claim workflows</span>
+          </article>
+          <article class="impact-card">
+            <span class="impact-value">03</span>
+            <span class="impact-label">Core focus areas</span>
+            <span class="impact-note">Software engineering · ERP · QA</span>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section class="alt dotgrid" id="about" aria-labelledby="about-title">
