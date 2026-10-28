@@ -433,6 +433,33 @@ section{padding-block:var(--section-pad);position:relative}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 @media (hover:none),(pointer:coarse){.cursor-glow{display:none}}
 @media (prefers-reduced-motion:reduce){.intro,.cursor-glow,.hero-particles{display:none}.aurora{animation:none}.split-name .ch,.js .skill-card .chip{opacity:1;transform:none;translate:none}.btn-primary::before{display:none}.magnetic{translate:none!important}}
+/* ===== Futuristic layer ===== */
+.horizon{position:absolute;left:-10%;right:-10%;bottom:0;height:42%;perspective:420px;overflow:hidden;-webkit-mask-image:linear-gradient(to top,#000 10%,transparent);mask-image:linear-gradient(to top,#000 10%,transparent);opacity:.5}
+.horizon-grid{position:absolute;left:0;right:0;top:0;height:200%;transform-origin:50% 0;transform:rotateX(68deg) translateY(0);background-image:linear-gradient(color-mix(in srgb,var(--accent) 40%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--accent) 40%,transparent) 1px,transparent 1px);background-size:48px 48px;animation:horizon 3.2s linear infinite;will-change:transform}
+@keyframes horizon{to{transform:rotateX(68deg) translateY(48px)}}
+.scanlines{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,color-mix(in srgb,var(--text) 5%,transparent) 0 1px,transparent 1px 4px);opacity:.35;pointer-events:none}
+.scanlines::after{content:"";position:absolute;left:0;right:0;top:0;height:30%;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--accent) 10%,transparent),transparent);animation:scanSweep 7s linear infinite;will-change:transform}
+@keyframes scanSweep{from{transform:translateY(-100%)}to{transform:translateY(400%)}}
+.scan{overflow:hidden}
+.scan::before{content:"";position:absolute;top:0;bottom:0;left:0;width:35%;background:linear-gradient(100deg,transparent,color-mix(in srgb,var(--accent) 35%,transparent),transparent);transform:translateX(-120%) skewX(-20deg);pointer-events:none;opacity:0}
+.scan.in::before{animation:holoWipe 1.1s var(--ease) .25s}
+@keyframes holoWipe{0%{transform:translateX(-120%) skewX(-20deg);opacity:1}100%{transform:translateX(420%) skewX(-20deg);opacity:0}}
+.project-card{isolation:isolate}
+.neon{position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:3;opacity:0;transition:opacity .35s;overflow:hidden;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.neon i{position:absolute;left:50%;top:50%;width:160%;aspect-ratio:1;margin:-80% 0 0 -80%;background:conic-gradient(from 0deg,transparent 0 55%,var(--accent) 70%,var(--accent-2) 85%,transparent 100%);animation:spin 3.2s linear infinite;animation-play-state:paused}
+.project-card:hover .neon,.project-card:focus-within .neon{opacity:1}
+.project-card:hover .neon i,.project-card:focus-within .neon i{animation-play-state:running}
+.glare{position:absolute;inset:-30%;z-index:2;pointer-events:none;opacity:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.14) 50%,transparent 60%);transform:translate(var(--gx,0),var(--gy,0));transition:opacity .3s}
+.project-card:hover .glare{opacity:1}
+.cursor-trail i{position:fixed;top:0;left:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent);z-index:120;pointer-events:none;opacity:0;transform:translate3d(-99px,-99px,0);will-change:transform}
+.trail-on .cursor-trail i{opacity:.5}
+.cursor-trail i:nth-child(n+4){opacity:0}.trail-on .cursor-trail i:nth-child(n+4){opacity:.25}
+.term-line{margin:var(--sp-2) 0 0;font:500 var(--fs-xs)/1.4 var(--font-mono);color:var(--muted);min-height:1.4em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.term-line .c-prompt{color:var(--accent)}.footer-inner .term-line{flex-basis:100%;order:3}
+.hero-visual,.horizon,.aurora{transition:none}
+@media (hover:none),(pointer:coarse){.cursor-trail{display:none}}
+@media (max-width:639px){.horizon{height:30%;opacity:.35}}
+@media (prefers-reduced-motion:reduce){.cursor-trail,.scanlines::after{display:none}.horizon-grid{animation:none}.scan::before{display:none}.neon i{animation:none}}
 </style>
 </head>
 <body>
@@ -440,6 +467,7 @@ section{padding-block:var(--section-pad);position:relative}
   <div class="intro" aria-hidden="true"><div class="intro-inner"><span class="intro-mark">HM</span><span class="intro-bar"></span></div></div>
   <div class="scroll-progress" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="cursor-trail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <svg class="sprite" aria-hidden="true" focusable="false">
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
@@ -502,7 +530,7 @@ section{padding-block:var(--section-pad);position:relative}
 
   <main id="main" tabindex="-1">
     <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero-bg" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span><span class="aurora a3"></span><canvas class="hero-particles"></canvas></div>
+      <div class="hero-bg" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span><span class="aurora a3"></span><canvas class="hero-particles"></canvas><div class="horizon"><div class="horizon-grid"></div></div><span class="scanlines"></span></div>
       <div class="container hero-grid">
         <div>
           <ul class="status-row reveal">
@@ -765,6 +793,7 @@ _db.<span class="f">collection</span>(<span class="s">'applications'</span>)
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>&copy; <span id="year">2026</span> Haris Mughal · Lahore, Pakistan</p>
+      <p class="term-line" aria-hidden="true"><span class="c-prompt">$</span> <span id="term-typed"></span><span class="caret"></span></p>
       <nav aria-label="Social links"><ul class="social">
         <li><a class="icon-btn" href="https://github.com/HarisMughal46" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in new tab)"><svg class="ico" aria-hidden="true"><use href="#i-github"/></svg></a></li>
         <li><a class="icon-btn" href="https://www.linkedin.com/in/harismughal-hm4646" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in new tab)"><svg class="ico" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
@@ -937,19 +966,49 @@ _db.<span class="f">collection</span>(<span class="s">'applications'</span>)
     });
   }
 
-  /* Role typewriter */
-  var roles = ['.NET Developer', 'ERP Engineer', 'AI Builder', 'QA-minded'], typed = $('#typed');
-  if (typed && !rm.matches) {
-    var ri = 0, ci = roles[0].length, del = true;
-    (function tick() {
-      var word = roles[ri];
-      if (del) { ci--; if (ci <= 0) { del = false; ri = (ri + 1) % roles.length; } }
-      else { ci++; if (ci >= roles[ri].length) { del = true; typed.textContent = roles[ri]; return setTimeout(tick, 1800); } }
-      typed.textContent = roles[ri].slice(0, Math.max(0, ci)) || '\u200b';
-      setTimeout(tick, del ? 45 : 85);
+  /* Scramble / decode text */
+  var GLYPHS = '!<>-_\\/[]{}=+*^?#01ABCDEF';
+  function scramble(el, to, dur, done) {
+    var from = el.textContent, len = Math.max(from.length, to.length), q = [];
+    for (var i = 0; i < len; i++) { var st = Math.floor(Math.random() * dur * 0.4); q.push({ f: from[i] || '', t: to[i] || '', s: st, e: st + Math.floor(Math.random() * dur * 0.6) }); }
+    var fr = 0;
+    (function upd() {
+      var out = '', fin = 0;
+      for (var i = 0; i < q.length; i++) {
+        var c = q[i];
+        if (fr >= c.e) { fin++; out += c.t; }
+        else if (fr >= c.s) out += (c.t === ' ' ? ' ' : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
+        else out += c.f;
+      }
+      el.textContent = out || '\u200b';
+      if (fin === q.length) { if (done) done(); } else { fr++; requestAnimationFrame(upd); }
     })();
   }
-
+  var roles = ['.NET Developer', 'ERP Engineer', 'AI Builder', 'QA-minded'], typed = $('#typed');
+  if (typed && !rm.matches) {
+    var ri = 0;
+    (function next() { setTimeout(function () { ri = (ri + 1) % roles.length; scramble(typed, roles[ri], 40, next); }, 2400); })();
+  }
+  if (!rm.matches && 'IntersectionObserver' in window) {
+    var sio = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) { sio.unobserve(x.target); var t = x.target.getAttribute('data-txt'); scramble(x.target, t, 32); } });
+    }, { threshold: 0.6 });
+    $$('.eyebrow').forEach(function (e) {
+      if (e.children.length) return;
+      e.setAttribute('data-txt', e.textContent); e.setAttribute('aria-label', e.textContent);
+      sio.observe(e);
+    });
+  }
+  /* footer terminal line */
+  var tt = $('#term-typed');
+  if (tt) {
+    var cmd = 'git commit -m "thanks for visiting"';
+    if (rm.matches) tt.textContent = cmd;
+    else new IntersectionObserver(function (en, o) {
+      if (!en[0].isIntersecting) return; o.disconnect();
+      var i = 0; (function ty() { tt.textContent = cmd.slice(0, ++i); if (i < cmd.length) setTimeout(ty, 45 + Math.random() * 60); })();
+    }).observe(tt);
+  }
 
   /* ===== Motion layer ===== */
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -1020,23 +1079,40 @@ _db.<span class="f">collection</span>(<span class="s">'applications'</span>)
     var cv = $('.hero-particles');
     if (cv && cv.getContext) {
       var startParticles = function () {
-        var ctx = cv.getContext('2d'), W, H, pts = [], vis = true, raf;
-        var N = innerWidth < 640 ? 26 : 60;
-        function size() { W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight; }
+        var ctx = cv.getContext('2d'), W, H, D = Math.min(devicePixelRatio || 1, 1.5), pts = [], vis = true, raf, mx = -9999, my = -9999, px = 0, py = 0, col = '#2dd4bf';
+        var low = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+        var N = innerWidth < 640 ? (low ? 18 : 28) : (low ? 45 : 85);
+        function size() { W = cv.offsetWidth; H = cv.offsetHeight; cv.width = W * D; cv.height = H * D; ctx.setTransform(D, 0, 0, D, 0, 0); }
         size(); addEventListener('resize', size);
-        for (var i = 0; i < N; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 });
+        function readCol() { col = getComputedStyle(root).getPropertyValue('--accent').trim() || col; }
+        readCol(); new MutationObserver(readCol).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+        for (var i = 0; i < N; i++) { var z = Math.random() * .8 + .2; pts.push({ x: Math.random() * W, y: Math.random() * H, z: z, vx: (Math.random() - .5) * .3 * z, vy: (Math.random() - .5) * .3 * z }); }
+        var hero = cv.closest('.hero') || cv;
+        hero.addEventListener('pointermove', function (e) { var r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; });
+        hero.addEventListener('pointerleave', function () { mx = my = -9999; });
         function frame() {
-          var col = getComputedStyle(root).getPropertyValue('--accent').trim() || '#2dd4bf';
-          ctx.clearRect(0, 0, W, H); ctx.fillStyle = col; ctx.strokeStyle = col;
+          var tpx = mx > -9000 ? (mx / W - .5) * 30 : 0, tpy = mx > -9000 ? (my / H - .5) * 30 : 0;
+          px += (tpx - px) * .05; py += (tpy - py) * .05;
+          ctx.clearRect(0, 0, W, H); ctx.fillStyle = col; ctx.strokeStyle = col; ctx.lineWidth = 1;
           for (var i = 0; i < N; i++) {
             var p = pts[i]; p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
-            ctx.globalAlpha = .7; ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, 6.283); ctx.fill();
-            for (var j = i + 1; j < N; j++) {
-              var q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = dx * dx + dy * dy;
-              if (d < 16000) { ctx.globalAlpha = (1 - d / 16000) * .35; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
-            }
+            if (p.x < -20) p.x = W + 20; else if (p.x > W + 20) p.x = -20;
+            if (p.y < -20) p.y = H + 20; else if (p.y > H + 20) p.y = -20;
+            var dx = p.x - mx, dy = p.y - my, dm = dx * dx + dy * dy;
+            if (dm < 14400 && dm > 1) { var f = (1 - dm / 14400) * 1.4 * p.z, d = Math.sqrt(dm); p.x += dx / d * f; p.y += dy / d * f; }
+            p.sx = p.x + px * p.z; p.sy = p.y + py * p.z;
+            ctx.globalAlpha = .35 + p.z * .5; ctx.beginPath(); ctx.arc(p.sx, p.sy, .8 + p.z * 1.6, 0, 6.283); ctx.fill();
           }
+          for (i = 0; i < N; i++) {
+            var a = pts[i];
+            for (var j = i + 1; j < N; j++) {
+              var b = pts[j], ex = a.sx - b.sx, ey = a.sy - b.sy, d2 = ex * ex + ey * ey;
+              if (d2 < 13000) { ctx.globalAlpha = (1 - d2 / 13000) * .28 * Math.min(a.z, b.z); ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke(); }
+            }
+            var cx = a.sx - mx, cy = a.sy - my, c2 = cx * cx + cy * cy;
+            if (c2 < 32000) { ctx.globalAlpha = (1 - c2 / 32000) * .6; ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(mx, my); ctx.stroke(); }
+          }
+          ctx.globalAlpha = 1;
           if (vis && !document.hidden) raf = requestAnimationFrame(frame); else raf = 0;
         }
         new IntersectionObserver(function (en) { vis = en[0].isIntersecting; if (vis && !raf) raf = requestAnimationFrame(frame); }).observe(cv);
@@ -1045,6 +1121,53 @@ _db.<span class="f">collection</span>(<span class="s">'applications'</span>)
       };
       if ('requestIdleCallback' in window) requestIdleCallback(startParticles, { timeout: 2500 }); else setTimeout(startParticles, 1200);
     }
+  }
+
+  /* ===== Futuristic layer ===== */
+  $$('.project-card').forEach(function (c) {
+    var n = document.createElement('span'); n.className = 'neon'; n.setAttribute('aria-hidden', 'true'); n.innerHTML = '<i></i>'; c.appendChild(n);
+    var g = document.createElement('span'); g.className = 'glare'; g.setAttribute('aria-hidden', 'true'); c.appendChild(g);
+  });
+  $$('.section-title').forEach(function (t) { t.classList.add('scan'); });
+  if (!rm.matches) {
+    if (fine) {
+      $$('.project-card').forEach(function (c) {
+        c.addEventListener('pointermove', function (e) {
+          var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          c.style.setProperty('--gx', ((x - .5) * 60).toFixed(1) + '%'); c.style.setProperty('--gy', ((y - .5) * 60).toFixed(1) + '%');
+        });
+      });
+      $$('.social .icon-btn, .nav-actions .icon-btn').forEach(function (b) {
+        b.classList.add('magnetic');
+        b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); b.style.translate = ((e.clientX - r.left - r.width / 2) * .35).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * .35).toFixed(1) + 'px'; });
+        b.addEventListener('pointerleave', function () { b.style.translate = ''; });
+      });
+      /* cursor trail */
+      var dots = $$('.cursor-trail i'), tp = dots.map(function () { return { x: -99, y: -99 }; }), cxp = -99, cyp = -99, tRun = false, idle = 0;
+      function trail() {
+        var x = cxp, y = cyp, moving = false;
+        tp.forEach(function (p, i) {
+          var k = .45 - i * .04; p.x += (x - p.x) * k; p.y += (y - p.y) * k;
+          if (Math.abs(x - p.x) + Math.abs(y - p.y) > .3) moving = true;
+          dots[i].style.transform = 'translate3d(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px,0) scale(' + (1 - i * .1).toFixed(2) + ')';
+          x = p.x; y = p.y;
+        });
+        if (moving) requestAnimationFrame(trail); else tRun = false;
+      }
+      window.addEventListener('pointermove', function (e) {
+        cxp = e.clientX; cyp = e.clientY; document.body.classList.add('trail-on');
+        if (!tRun) { tRun = true; requestAnimationFrame(trail); }
+      }, { passive: true });
+    }
+    /* parallax depth */
+    var hv = $('.hero-visual'), hz = $('.horizon'), au = $$('.aurora'), pTick = false;
+    function para() {
+      pTick = false; var y = window.scrollY; if (y > innerHeight * 1.2) return;
+      if (hv) hv.style.translate = '0 ' + (y * -0.12).toFixed(1) + 'px';
+      if (hz) hz.style.translate = '0 ' + (y * 0.25).toFixed(1) + 'px';
+      au.forEach(function (a, i) { a.style.translate = '0 ' + (y * (0.15 + i * 0.1)).toFixed(1) + 'px'; });
+    }
+    window.addEventListener('scroll', function () { if (!pTick) { pTick = true; requestAnimationFrame(para); } }, { passive: true });
   }
   document.getElementById('year').textContent = String(new Date().getFullYear());
   onScroll();
